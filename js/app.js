@@ -25,7 +25,17 @@
  * 
 */
 
+function getListOfSections() {
+    return document.getElementsByTagName('section');
+}
 
+function getListOfSectionHeaders(){
+    return document.querySelectorAll('.landing__container h2');
+}
+
+function onDOMContenLoad() {
+ setTimeout(createNavigationBar(), 0);
+}
 
 /**
  * End Helper Functions
@@ -34,6 +44,23 @@
 */
 
 // build the nav
+function createNavigationBar(){
+    debugger;
+    let listOfSections = getListOfSections();
+    let listOfSectionHeaders = getListOfSectionHeaders();
+    
+    let nav = document.createDocumentFragment();
+    for(let i = 0; i < listOfSections.length; i++){
+        let navButton = document.createElement('button');
+        navButton.setAttribute("class", "menu__link");
+        navButton.textContent = listOfSectionHeaders[i].textContent;
+        nav.appendChild(navButton);
+    }
+    var navlist = document.querySelector("#navbar__list");
+    navlist.appendChild(nav);
+    // document.body.appendChild(nav);
+    // document.querySelector('#section1').prepend(nav);
+}
 
 
 // Add class 'active' to section when near top of viewport
@@ -47,6 +74,9 @@
  * Begin Events
  * 
 */
+
+//Adding onLoadEvent
+document.addEventListener('DOMContentLoaded', onDOMContenLoad());
 
 // Build menu 
 
