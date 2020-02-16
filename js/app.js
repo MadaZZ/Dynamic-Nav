@@ -29,12 +29,18 @@ function getListOfSections() {
     return document.getElementsByTagName('section');
 }
 
-function getListOfSectionHeaders(){
+function getListOfSectionHeaders() {
     return document.querySelectorAll('.landing__container h2');
 }
 
 function onDOMContenLoad() {
- setTimeout(createNavigationBar(), 0);
+    setTimeout(createNavigationBar(), 0);
+}
+
+function onScroll() {
+    clearTimeout(timer);
+    showMenuBar();
+    var timer = setTimeout(hideMenuBar(), 4000);
 }
 
 /**
@@ -43,14 +49,23 @@ function onDOMContenLoad() {
  * 
 */
 
+function showMenuBar() {
+    const navbar = document.querySelector('nav');
+    navbar.classList.toggle('hidden');
+}
+
+function hideMenuBar() {
+    const navbar = document.querySelector('nav');
+    navbar.classList.toggle('hidden');
+}
+
 // build the nav
-function createNavigationBar(){
-    debugger;
+function createNavigationBar() {
     let listOfSections = getListOfSections();
     let listOfSectionHeaders = getListOfSectionHeaders();
-    
+
     let nav = document.createDocumentFragment();
-    for(let i = 0; i < listOfSections.length; i++){
+    for (let i = 0; i < listOfSections.length; i++) {
         let navButton = document.createElement('button');
         navButton.setAttribute("class", "menu__link");
         navButton.textContent = listOfSectionHeaders[i].textContent;
@@ -58,8 +73,6 @@ function createNavigationBar(){
     }
     var navlist = document.querySelector("#navbar__list");
     navlist.appendChild(nav);
-    // document.body.appendChild(nav);
-    // document.querySelector('#section1').prepend(nav);
 }
 
 
@@ -77,6 +90,7 @@ function createNavigationBar(){
 
 //Adding onLoadEvent
 document.addEventListener('DOMContentLoaded', onDOMContenLoad());
+document.body.addEventListener('scroll', onScroll());
 
 // Build menu 
 
