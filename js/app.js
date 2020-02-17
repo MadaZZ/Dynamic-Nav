@@ -18,6 +18,7 @@
  * 
 */
 
+var menuTimer;
 
 /**
  * End Global Variables
@@ -40,7 +41,7 @@ function onDOMContenLoad() {
 function onScroll() {
     clearTimeout(timer);
     showMenuBar();
-    var timer = setTimeout(hideMenuBar(), 4000);
+    timer = setTimeout(hideMenuBar(), 4000);
 }
 
 /**
@@ -68,7 +69,9 @@ function createNavigationBar() {
     for (let i = 0; i < listOfSections.length; i++) {
         let navButton = document.createElement('button');
         navButton.setAttribute("class", "menu__link");
+        navButton.toTag = listOfSections[i].id;
         navButton.textContent = listOfSectionHeaders[i].textContent;
+        navButton.onclick = scrollToSection;
         nav.appendChild(navButton);
     }
     var navlist = document.querySelector("#navbar__list");
@@ -95,7 +98,23 @@ document.body.addEventListener('scroll', onScroll());
 // Build menu 
 
 // Scroll to section on link click
+function scrollToSection(event) {
+    if (event.toElement.toTag) {
+        let obj = '#'+ event.toElement.toTag;
+        document.querySelector(obj).scrollIntoView({
+            behavior: 'smooth'
+        });
+        setClassOfButton(obj);
+    }
+}
 
 // Set sections as active
-
-
+function setClassOfButton(obj){
+    const activeSection = document.querySelector(obj);
+    let listOfSections = getListOfSections();
+    for (let i = 0; i < listOfSections.length; i++) {
+        const element = listOfSections[0];
+        element.classList.remove('your-active-class');
+    }
+    activeSection.classList.add('your-active-class');
+}
