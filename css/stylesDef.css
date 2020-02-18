@@ -69,6 +69,7 @@ section {
     margin: 0;
     text-align: right;
     display: flex;
+    color: linear-gradient(0deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.2) 100%);
 }
 
 .navbar__menu li {
@@ -96,6 +97,10 @@ section {
     background: #333;
     color: #fff;
     transition: ease 0.3s all;
+}
+
+.hidden {
+    display: none;
 }
 
 /* Header Styles */
@@ -230,4 +235,19 @@ section.your-active-class .landing__container::after {
 		           translate(-1em) 
 		           rotate(-360deg);
 	}
+}
+
+/*Floating button class*/
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:rgb(82, 181, 228);
+	color:#000;
+	border-radius:50px;
+	text-align:center;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 3;
 }
