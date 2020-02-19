@@ -64,6 +64,15 @@ section {
 /* ---- Module Rules ---- */
 
 /* Navigation Styles*/
+
+/* Active nav Link */
+
+.activeLink {
+    background: #333;
+    color: #fff;
+    transition: ease 0.3s all;
+}
+
 .navbar__menu ul {
     padding-left: 0;
     margin: 0;
@@ -251,3 +260,4 @@ section.your-active-class .landing__container::after {
     box-shadow: 2px 2px 3px #999;
     z-index: 3;
 }
+

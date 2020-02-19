@@ -58,7 +58,7 @@ function onDOMContenLoad() {
 function onScroll(event) {
     navbarToggleHandler();
     toggleGotoTopButton();
-    // activateSection();
+    setTimeout(activateSection(), 0);
 }
 
 // Toggle visibility of go to top button
@@ -101,6 +101,7 @@ function createNavigationBar() {
     for (let i = 0; i < listOfSections.length; i++) {
         let navButton = document.createElement('li');
         navButton.setAttribute("class", "menu__link");
+        navButton.setAttribute("id", "nav"+i);
         navButton.toTag = listOfSections[i].id;
         navButton.textContent = listOfSectionHeaders[i].textContent;
         navButton.onclick = scrollToSection;
@@ -115,12 +116,16 @@ function createNavigationBar() {
 function activateSection() {
     const listOfSections = getListOfSections();
     const windowOffset = window.pageYOffset;
+    let itemIndex = null, top = 99999;
     for (let i = 0; i < listOfSections.length; i++) {
-        if(listOfSections[i].offsetTop <= window.pageYOffset - 20){
-            setSectionActive('#'+listOfSections[i].id);
-            return;
+        const data = listOfSections[i].getBoundingClientRect();
+        let topTo = Math.abs(data.top) - Math.abs(window.pageYOffset);
+        if(topTo < top){
+            top = topTo;
+            itemIndex = i;
         }
     }
+    setTimeout(setSectionActive('#'+listOfSections[itemIndex].id), 0);
 }
 
 
@@ -151,10 +156,17 @@ function scrollToSection(event) {
 // Set sections as active
 function setSectionActive(obj) {
     const activeSection = document.querySelector(obj);
+    const navElements = document.body.getElementsByClassName("menu__link");
+    let itemIndex;
     let listOfSections = getListOfSections();
     for (let i = 0; i < listOfSections.length; i++) {
         const element = listOfSections[i];
+        navElements[i].classList.remove('activeLink');
         element.classList.remove('your-active-class');
+        if(activeSection.id === element.id){
+            itemIndex = i;
+        }
     }
+    navElements[itemIndex].classList.add('activeLink');
     activeSection.classList.add('your-active-class');
 }
